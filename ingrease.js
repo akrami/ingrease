@@ -37,6 +37,12 @@ function update_hud() {
         $('#' + item + '-count').text(localStorage.getItem(item + '-count'));
         $('#' + item + '-cost').text(localStorage.getItem(item + '-cost'));
         $('#' + item + '-total').text(localStorage.getItem(item + '-make') * localStorage.getItem(item + '-count'));
+        console.log(localStorage.getItem('gold')+ '<' + localStorage.getItem(item+'-cost'));
+        if(parseFloat(localStorage.getItem('gold')) < parseFloat(localStorage.getItem(item+'-cost'))) {
+            $('#'+item).prop('disabled', true);
+        } else {
+            $('#'+item).removeAttr('disabled');
+        }
     });
     $('#gold').text(localStorage.getItem('gold'));
 }
