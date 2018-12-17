@@ -2,7 +2,7 @@ var items = ['buy1', 'buy2', 'buy3', 'buy4'];
 
 function begin() {
     //initializing
-    if (localStorage.getItem('gold') === null) localStorage.setItem('gold', 0);
+    if (localStorage.getItem('gold') === null) localStorage.setItem('gold', 1);
     if (localStorage.getItem('buy1-count') === null) localStorage.setItem('buy1-count', 0);
     if (localStorage.getItem('buy1-cost') === null) localStorage.setItem('buy1-cost', 1);
     if (localStorage.getItem('buy1-make') === null) localStorage.setItem('buy1-make', 0.01);
