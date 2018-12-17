@@ -1,3 +1,5 @@
+var items = ['buy1', 'buy2', 'buy3', 'buy4'];
+
 function begin() {
     //initializing
     if (localStorage.getItem('gold') === null) localStorage.setItem('gold', 0);
@@ -14,15 +16,20 @@ function begin() {
     if (localStorage.getItem('buy4-cost') === null) localStorage.setItem('buy4-cost', 1000000000);
     if (localStorage.getItem('buy4-make') === null) localStorage.setItem('buy4-make', 10000000);
 
-    $('#buy1').click(function (event) {
-        event.preventDefault();
-        console.log('bought 1');
+    items.forEach(item => {
+        $('#'+item).click(function (event){
+            event.preventDefault();
+            if(parseFloat(localStorage.getItem('gold')) >= parseFloat(localStorage.getItem(item+'-cost'))) {
+                localStorage.setItem('gold', parseFloat(localStorage.getItem('gold') - localStorage.getItem(item+'-cost')).toFixed(2));
+                localStorage.setItem(item+'-cost', parseFloat(localStorage.getItem(item+'-cost')*2.05).toFixed(2));
+                localStorage.setItem(item+'-count', parseInt(localStorage.getItem(item+'-count'))+1);
+            }
+        });
     });
 }
 
 function update() {;
     //assign variables to texts
-    var items = ['buy1', 'buy2', 'buy3', 'buy4'];
     var increase = 0;
     items.forEach(item => {
         increase += parseFloat(localStorage.getItem(item + '-make') * localStorage.getItem(item + '-count'));
@@ -32,14 +39,12 @@ function update() {;
 }
 
 function update_hud() {
-    var items = ['buy1', 'buy2', 'buy3', 'buy4'];
     items.forEach(item => {
         $('#' + item + '-count').text(localStorage.getItem(item + '-count'));
         $('#' + item + '-cost').text(localStorage.getItem(item + '-cost'));
         $('#' + item + '-total').text(localStorage.getItem(item + '-make') * localStorage.getItem(item + '-count'));
-        console.log(localStorage.getItem('gold')+ '<' + localStorage.getItem(item+'-cost'));
         if(parseFloat(localStorage.getItem('gold')) < parseFloat(localStorage.getItem(item+'-cost'))) {
-            $('#'+item).prop('disabled', true);
+            $('#'+item).attr('disabled', true);
         } else {
             $('#'+item).removeAttr('disabled');
         }
